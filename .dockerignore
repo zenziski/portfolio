@@ -6,6 +6,10 @@ coverage
 .git
 .gitignore
 .vercel
+.open-next
+.wrangler
+.dev.vars
+cloudflare-env.d.ts
 .env*
 *.log
 npm-debug.log*
