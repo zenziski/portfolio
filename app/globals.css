@@ -1,26 +1,132 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@theme {
+  --color-void: #0a0a0a;
+  --color-panel: #121212;
+  --color-panel-2: #181818;
+  --color-terminal: #00ff66;
+  --color-terminal-dim: #02e059;
+  --color-ink: #ededed;
+  --color-mist: #a1a1aa;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-color: #00ff66 #121212;
+  scrollbar-width: thin;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: #00ff66;
+  color: #0a0a0a;
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-caret {
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(0, 255, 102, 0);
+  }
+}
+
+.status-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 3px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  mix-blend-mode: multiply;
+}
+
+.crt-vignette {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.terminal-glow {
+  text-shadow: 0 0 12px rgba(0, 255, 102, 0.45);
+}
+
+.terminal-glow-soft {
+  text-shadow: 0 0 8px rgba(0, 255, 102, 0.25);
+}
+
+@keyframes marquee-boot {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 200%;
+  }
+}
+
+.skeleton-line {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 102, 0.08),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: marquee-boot 1.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .scanlines,
+  .crt-vignette,
+  .skeleton-line {
+    animation: none;
+  }
 }
