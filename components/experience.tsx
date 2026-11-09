@@ -1,91 +1,104 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { GitCommitHorizontal } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { EXPERIENCE } from "@/lib/data";
-import SectionHeader from "./section-header";
+import { DoodlePin } from "./doodles";
+import { Hand, PaperCard, SectionLabel, Sticker, Tape } from "./sketch";
+
+const TILTS = [-0.6, 0.5, -0.4, 0.6];
 
 export default function Experience() {
+  const reduce = useReducedMotion();
+
   return (
-    <section id="experiencia" className="scroll-mt-16">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <SectionHeader
-          index="02"
-          title="Experiência"
-          command="git log --decorate"
-          description="Trajetória profissional como histórico de commits: cargos, stacks e entregas mensuráveis em FinTech e SaaS corporativo."
+    <section id="experiencia" className="scroll-mt-24">
+      <SectionLabel meta={`${EXPERIENCE.length} paradas`}>
+        notas de campo
+      </SectionLabel>
+      <p className="mt-4 max-w-xl font-hand text-xl leading-snug text-ink-soft">
+        o caminho até aqui, com as entregas que realmente importaram.
+      </p>
+
+      <div className="relative mt-8 pl-7 sm:pl-10">
+        <span
+          aria-hidden
+          className="absolute bottom-4 left-[9px] top-4 border-l border-dashed border-line-strong sm:left-[13px]"
         />
+        <ol className="space-y-6">
+          {EXPERIENCE.map((job, index) => (
+            <motion.li
+              key={`${job.company}-${job.date}`}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.45, delay: index * 0.05 }}
+              className="relative"
+            >
+              <span
+                aria-hidden
+                className="absolute -left-7 top-5 flex h-5 w-5 items-center justify-center rounded-full border border-line bg-paper sm:-left-10"
+              >
+                <DoodlePin
+                  className={`h-4 w-4 ${
+                    job.current ? "text-sage-deep" : "text-sky-deep/70"
+                  }`}
+                />
+              </span>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="overflow-hidden rounded-lg border border-line bg-panel"
-        >
-          <div className="flex items-center gap-4 border-b border-line bg-panel-2 px-4 py-2.5 font-mono text-[11px] text-mist">
-            <GitCommitHorizontal className="h-4 w-4 text-terminal" />
-            <span>
-              git log --oneline --decorate --all
-            </span>
-            <span className="ml-auto text-terminal">{EXPERIENCE.length} commits</span>
-          </div>
-
-          <div className="relative p-6 sm:p-8">
-            <div
-              aria-hidden
-              className="absolute bottom-8 left-[1.5rem] top-8 w-px bg-line sm:left-[2.15rem]"
-            />
-            <ol className="space-y-10">
-              {EXPERIENCE.map((node, i) => (
-                <motion.li
-                  key={node.hash}
-                  initial={{ opacity: 0, x: -12 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.45, delay: i * 0.06 }}
-                  className="relative pl-12 sm:pl-16"
-                >
-                  <span className="absolute left-[0.55rem] top-1 z-10 flex h-5 w-5 items-center justify-center sm:left-[1.2rem]">
-                    <span
-                      className={`h-2.5 w-2.5 rounded-full border-2 border-void ${
-                        node.current ? "bg-terminal status-dot" : "bg-mist"
-                      }`}
-                    />
-                  </span>
-
-                  <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
-                    <span className="rounded bg-terminal/10 px-1.5 py-0.5 font-semibold text-terminal">
-                      {node.hash}
-                    </span>
-                    <span className="text-mist">({node.branch})</span>
-                    <span className="text-mist">·</span>
-                    <span className="text-ink">{node.date}</span>
-                    {node.current && (
-                      <span className="rounded border border-terminal px-1.5 py-0.5 text-[10px] text-terminal">
-                        HEAD
+              <div style={{ transform: `rotate(${TILTS[index % TILTS.length]}deg)` }}>
+                <PaperCard className="p-5 sm:p-6">
+                  <Tape
+                    className="-top-2.5 left-8 h-5 w-20"
+                    tint={index % 2 ? "sky" : "sage"}
+                    tilt={index % 2 ? 3 : -4}
+                  />
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <h3 className="font-display text-xl leading-tight text-ink sm:text-2xl">
+                        {job.role}
+                      </h3>
+                      <p className="mt-0.5 font-hand text-lg leading-none text-sage-deeper">
+                        {job.company} · {job.place}
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1.5">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
+                        {job.period}
                       </span>
-                    )}
+                      {job.current && (
+                        <Sticker tint="mint" className="rotate-1">
+                          <span className="h-1.5 w-1.5 rounded-full bg-sage-deep animate-breathe" />
+                          ainda aqui
+                        </Sticker>
+                      )}
+                    </div>
                   </div>
 
-                  <h3 className="mt-3 font-mono text-base font-bold text-ink">
-                    {node.role}
-                  </h3>
-                  <p className="mt-0.5 text-sm text-terminal-dim">{node.company}</p>
-
-                  <ul className="mt-3 space-y-1.5 text-sm leading-relaxed text-mist">
-                    {node.bullets.map((b) => (
-                      <li key={b} className="flex gap-2">
-                        <span className="mt-0.5 text-terminal">▸</span>
-                        <span>{b}</span>
+                  <ul className="mt-3 space-y-1.5">
+                    {job.bullets.map((bullet) => (
+                      <li
+                        key={bullet}
+                        className="flex gap-2 text-[13px] leading-relaxed text-ink-soft"
+                      >
+                        <span
+                          aria-hidden
+                          className="mt-[0.55rem] h-1 w-1 shrink-0 rounded-full bg-sage-deep/70"
+                        />
+                        <span>{bullet}</span>
                       </li>
                     ))}
                   </ul>
-                </motion.li>
-              ))}
-            </ol>
-          </div>
-        </motion.div>
+                </PaperCard>
+              </div>
+            </motion.li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="mt-6 flex items-center gap-2 pl-7 sm:pl-10">
+        <Hand className="text-lg text-ink-faint">
+          ...e o caderno continua.
+        </Hand>
       </div>
     </section>
   );

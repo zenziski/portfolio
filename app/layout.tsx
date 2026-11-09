@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Caveat, Fraunces, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,46 +12,54 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "Matheus Zenziski — Engenheiro Backend Sênior",
+  title: "Matheus Zenziski — Caderno de campo",
   description:
-    "Engenheiro Backend Sênior com 6+ anos em arquiteturas distribuídas cloud-native e sistemas de IA. Node.js, TypeScript, Python, LLM, Kafka, Kubernetes e Azure/AWS/GCP.",
+    "O caderno de um engenheiro de software: anotações, projetos de backend e IA, desenhos em pontilhismo e as coisas que me interessam fora do terminal.",
   keywords: [
-    "engenheiro backend",
-    "backend engineer",
+    "matheus zenziski",
+    "portfólio",
+    "engenheiro de software",
+    "backend",
     "node.js",
     "typescript",
     "python",
     "llm",
-    "rag",
-    "microsserviços",
-    "kubernetes",
-    "azure",
-    "aws",
-    "gcp",
-    "fintech",
-    "saas",
+    "caderno de campo",
+    "sketchbook",
   ],
   authors: [{ name: "Matheus Zenziski" }],
   openGraph: {
-    title: "Matheus Zenziski — Engenheiro Backend Sênior",
+    title: "Matheus Zenziski — Caderno de campo",
     description:
-      "Arquiteturas distribuídas, sistemas de IA e cloud em produção. Aberto a oportunidades.",
+      "Anotações, projetos, pontilhismo e coisas que me interessam. O caderno de um engenheiro de software.",
     type: "website",
     locale: "pt_BR",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f3f6ec",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${caveat.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-void font-sans text-ink">
-        <noscript>
-          <style>{`[data-boot-screen]{display:none!important}`}</style>
-        </noscript>
+      <body className="min-h-dvh bg-paper font-sans text-ink">
         {children}
       </body>
     </html>

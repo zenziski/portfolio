@@ -1,46 +1,65 @@
-Você é um desenvolvedor Frontend Senior e Creative Technologist especializado em UI/UX de alto nível. Seu objetivo é construir um site de portfólio para um desenvolvedor de software sênior que está atuando como freelancer.
+# Caderno de campo — direção de design
 
-### CONCEITO E ESTÉTICA
-- Estilo: "Terminal & IDE Neobrutalista Moderno".
-- Esquema de cores: Fundo escuro profundo (#0a0a0a, #121212), detalhes em Verde Neon/Terminal (#00FF66 ou #02e059), cinzas neutros para texto secundário e alto contraste.
-- Atmosfera: Parece uma interface de controle de sistemas/IDE de alta performance, mas é 100% funcional, responsiva e intuitiva para clientes não-técnicos navegarem sem precisar digitar comandos no terminal (embora comandos opcionais devam existir).
+Portfólio de Matheus Zenziski como um **sketchbook de programador**: anotações,
+colagens, desenhos e estudos em pontilhismo. Nada de estética de terminal/IDE.
 
-### PROIBIDO (EVITAR "AI SLOP" E CLICHÊS):
-- NÃO use os templates genéricos de portfólio de IA (cards padronizados com gradiente flutuante, textos clichês como "Transformando ideias em código", orbes brilhantes de fundo).
-- NÃO faça telas de carregamento longas que travam a navegação do usuário.
-- NÃO sacrifique a usabilidade do site para parecer um terminal puro dos anos 80. Deve ser um site funcional em primeiro lugar, com linguagem estética de terminal.
+## Conceito
 
-### ARQUITETURA DE UI E COMPONENTES
-1. Header / Barra de Status do Sistema:
-   - Apresente métricas de status em tempo real (ex: "STATUS: AVAILABLE FOR FREELANCE", hora local UTC/BRT, uptime simulado, versão do sistema v2.6.0).
-   - Menu de navegação rápido com atalhos de teclado visíveis (ex: [1] Projetos, [2] Serviços, [3] Git Log, [4] Contato) e suporte a Command Palette (Cmd+K / Ctrl+K).
+Duas áreas independentes dentro do mesmo caderno:
 
-2. Hero Section:
-   - Em vez da introdução convencional, crie uma área de "System Init" rápida em texto monospaçado que se transforma em uma apresentação de autoridade técnica.
-   - Apresente diretamente as especialidades do desenvolvedor, stack principal e chamada para contratação/freelance.
+- **O trabalho** (`#profissional`) — bio, cases, experiência, stack, serviços e formação.
+- **O pessoal** (`#pessoal`) — "no momento", filmes, livros, jogos, música, hobbies,
+  manifesto e estudos em pontilhismo.
 
-3. Seção de Projetos (Cases Freelance):
-   - Estilo "File Explorer / Database Viewer".
-   - Cada projeto deve parecer um arquivo do sistema que expande ao ser clicado (`layoutId` do Framer Motion).
-   - Inclua detalhes como: problema resolvido, stack utilizada, diff de código/snippet relevante, métricas reais de impacto e link direto para demo/GitHub.
+A navegação alterna entre as áreas com uma transição calma de página.
 
-4. Seção de Experiência (Git History Timeline):
-   - Apresente a trajetória profissional como um log de `git commit` ou linha do tempo interativa com hashes de commit fictícios, branches de evolução e cargos.
+## Paleta
 
-5. Seção Freelance / Serviços & System Capabilities:
-   - Apresente os serviços de forma direta (Ex: Desenvolvimento Full-Stack, Arquitetura de Software, Refatoração, MVP Rápido).
-   - Inclua estimativa de disponibilidade e formato de trabalho.
+Tons pastel de verde e azul sobre papel levemente esverdeado.
 
-6. Seção de Contato (CLI Terminal Prompt):
-   - Um mini-terminal interativo funcional no final da página onde o usuário pode enviar uma mensagem (preenchendo nome, e-mail e proposta) como se estivesse executando um comando `send-message --email`. Forneça também um formulário convencional com toggle visual.
+| Token | Valor | Uso |
+| --- | --- | --- |
+| `paper` | `#f3f6ec` | fundo de papel |
+| `paper-2 / paper-3` | `#e9efe1` / `#dde7d5` | camadas e texturas |
+| `ink` | `#22312a` | texto principal |
+| `ink-soft / ink-faint` | `#53655b` / `#839189` | texto secundário |
+| `sage / sage-deep` | `#a9c8b2` / `#5f8f74` | verde pastel e acentos |
+| `mint` | `#dcebd8` | notas e chips |
+| `sky / sky-deep` | `#bed9e8` / `#4f7f9e` | azul pastel e acentos |
+| `sticky` / `sticky-blue` | `#eef2c8` / `#dbe9f2` | post-its |
 
-### ANIMAÇÕES E INTERAÇÕES (Framer Motion)
-- Use Framer Motion para todas as transições de estado.
-- Efeitos de micro-interação: hover nos botões com resposta de terminal (cursor customizado ou indicador `>`), efeito de "typing" sutil e instantâneo, animação de entrada em cascata (staggered children).
-- Animações de layout fluídas (`AnimatePresence` para filtros de projetos e modais de detalhes).
-- Animação sutil de scanline CRT no fundo (opcional via CSS puro, mantendo performance a 60fps).
+## Tipografia
 
-### STACK TÉCNICA
-- Next.js (App Router), React, Tailwind CSS, Framer Motion, Lucide-react para ícones minimalistas.
+- **Fraunces** (`font-display`) — títulos editoriais e itálicos.
+- **Caveat** (`font-hand`) — anotações, legendas e voz do caderno.
+- **Geist** (`font-sans`) — corpo de texto.
+- **Geist Mono** (`font-mono`) — metadados, chips e trechos de código.
 
-Gere a estrutura de componentes modular, clean e pronta para produção.
+## Materiais e texturas
+
+- Papel com grão sutil, pauta (`ruled`), grade (`grid-paper`) e pontilhado (`dot-paper`).
+- Washi tape, post-its, clipes, carimbos e doodles desenhados à mão.
+- Sombras de papel, leve rotação e bordas irregulares.
+- Componentes em `components/sketch.tsx` e `components/doodles.tsx`.
+
+## Pontilhismo
+
+`components/dot-art.tsx` desenha arte em pontos via Canvas 2D:
+
+- `globe` — globo girando lentamente, continentes em dots mais escuros.
+- `horizon` — horizonte curvo de planeta, usado no rodapé.
+- `wave` — faixas de ondas em pontos.
+- `ridge` — montanhas pontilhadas com sol.
+
+Tudo respeita `prefers-reduced-motion` e pausa fora da viewport.
+
+## Movimento
+
+Animações calmas, sem excesso: reveals no scroll (Framer Motion), flutuação e
+balanço sutis, respiração nos indicadores de status e rotação lenta do globo.
+
+## Conteúdo pessoal
+
+Filmes, livros, jogos, música, hobbies, "no momento" e manifesto ficam em
+`lib/data.ts`, na seção **Lado pessoal**. Basta trocar os itens para atualizar a
+prateleira e os post-its.
